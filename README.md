@@ -1,5 +1,7 @@
 # QuantFlow AI Trader - Prototype/POC
 
+![QuantFlow Demo Interface](https://raw.githubusercontent.com/placeholder-path/demo.png)
+
 QuantFlow là một nền tảng giao dịch thuật toán (Algorithmic Trading) chuyên nghiệp dành cho cá nhân, tích hợp trình soạn thảo chiến thuật Python, hệ thống kiểm thử dữ liệu lịch sử (Backtesting) và giao diện điều khiển giao dịch trực tiếp.
 
 ## 🌟 Tính năng nổi bật
@@ -12,7 +14,6 @@ QuantFlow là một nền tảng giao dịch thuật toán (Algorithmic Trading)
   - Kết nối API sàn (Binance) cho giao dịch thực.
   - Cơ chế **Kill-Switch** dừng khẩn cấp toàn bộ hệ thống.
 - **Visualization:** Sử dụng Lightweight Charts từ TradingView cho hiệu năng hiển thị cực cao.
-![Uploading image.png…]()
 
 ## 🛠 Công nghệ sử dụng
 
