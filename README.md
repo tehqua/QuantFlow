@@ -12,6 +12,7 @@ QuantFlow là một nền tảng giao dịch thuật toán (Algorithmic Trading)
   - Kết nối API sàn (Binance) cho giao dịch thực.
   - Cơ chế **Kill-Switch** dừng khẩn cấp toàn bộ hệ thống.
 - **Visualization:** Sử dụng Lightweight Charts từ TradingView cho hiệu năng hiển thị cực cao.
+![Uploading image.png…]()
 
 ## 🛠 Công nghệ sử dụng
 
