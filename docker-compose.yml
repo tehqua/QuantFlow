@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg14
+    environment:
+      POSTGRES_USER: quant
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: quantflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - quant_net
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - quant_net
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    environment:
+      DATABASE_URL: postgresql://quant:password@db:5432/quantflow
+      REDIS_URL: redis://redis:6379
+      BINANCE_API_KEY: "" # Set in .env or UI
+      BINANCE_SECRET_KEY: ""
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - quant_net
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: python worker.py
+    volumes:
+      - ./backend:/app
+    environment:
+      DATABASE_URL: postgresql://quant:password@db:5432/quantflow
+      REDIS_URL: redis://redis:6379
+      # Sandbox limits would be applied here in production (cpus, mem_limit)
+    depends_on:
+      - db
+      - redis
+    networks:
+      - quant_net
+
+  frontend:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_WS_URL: ws://localhost:8000
+    networks:
+      - quant_net
+
+volumes:
+  postgres_data:
+
+networks:
+  quant_net:
+    driver: bridge

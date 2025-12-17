@@ -1,0 +1,5 @@
+{
+  "name": "QuantFlow AI Trader",
+  "description": "A professional-grade, single-user algorithmic trading platform featuring a Python strategy editor, historical backtesting engine, realtime visualization, and paper/live trading modes.",
+  "requestFramePermissions": []
+}
